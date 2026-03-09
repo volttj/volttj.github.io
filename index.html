@@ -1,0 +1,2976 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VoltTJ — Tecnología & Energía Solar | Tijuana, BC</title>
+<meta name="description" content="VoltTJ — Tu tienda de tecnología en Tijuana. Paneles solares, microinversores, cámaras de seguridad, electrónicos y más. Envío a todo México.">
+<meta name="keywords" content="paneles solares tijuana, microinversores, camaras seguridad tijuana, energia solar baja california, electronica tijuana">
+<meta property="og:title" content="VoltTJ — Tecnología & Energía Solar Tijuana">
+<meta property="og:description" content="Paneles solares, microinversores, cámaras y electrónicos en Tijuana, BC.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+/* Improved search dropdown */
+.search-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: var(--dark-3);
+  border: 1px solid rgba(0,87,255,0.3);
+  border-radius: var(--radius);
+  padding: 8px 0;
+  display: none;
+  z-index: 200;
+  box-shadow: var(--shadow-lg);
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.search-dropdown.show { 
+  display: block; 
+}
+
+.search-result-item {
+  padding: 10px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--gray-200);
+  transition: var(--transition);
+  display: flex; 
+  align-items: center; 
+  gap: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover { 
+  background: rgba(0,87,255,0.15); 
+  color: var(--white); 
+}
+
+/* Scrollbar for dropdown */
+.search-dropdown::-webkit-scrollbar {
+  width: 4px;
+}
+
+.search-dropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.search-dropdown::-webkit-scrollbar-thumb {
+  background: var(--blue);
+  border-radius: 2px;
+}
+
+
+  /* Fix modal to be full screen */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  z-index: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  padding: 20px;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  background: var(--dark-2);
+  border: 1px solid rgba(0,87,255,0.2);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  max-width: 90%;
+  width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: scale(0.9);
+  transition: transform 0.3s;
+}
+
+.modal-overlay.show .modal {
+  transform: scale(1);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  position: sticky;
+  top: 0;
+  background: var(--dark-2);
+  z-index: 1;
+  padding-bottom: 10px;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--gray-400);
+  font-size: 28px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: var(--transition);
+}
+
+.modal-close:hover {
+  background: rgba(255,255,255,0.1);
+  color: var(--white);
+}
+
+/* Fix for product detail modal content */
+#modalBody {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+#modalBody::-webkit-scrollbar {
+  width: 4px;
+}
+
+#modalBody::-webkit-scrollbar-thumb {
+  background: var(--blue);
+  border-radius: 2px;
+}
+:root {
+  --blue: #0057FF;
+  --blue-bright: #2979FF;
+  --blue-light: #5C9CFF;
+  --blue-dark: #0030B5;
+  --blue-deeper: #001A6E;
+  --electric: #00D4FF;
+  --white: #FFFFFF;
+  --off-white: #F0F4FF;
+  --gray-100: #E8EDF8;
+  --gray-200: #C8D3EE;
+  --gray-400: #7A8DB5;
+  --gray-600: #3D4F78;
+  --dark: #060D1F;
+  --dark-2: #0B1530;
+  --dark-3: #111E3A;
+  --accent: #00D4FF;
+  --accent-2: #FF6B35;
+  --success: #00E5A0;
+  --warning: #FFD600;
+  --font-display: 'Rajdhani', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --radius: 12px;
+  --radius-lg: 20px;
+  --shadow: 0 4px 24px rgba(0,87,255,0.12);
+  --shadow-lg: 0 12px 48px rgba(0,87,255,0.2);
+  --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--dark);
+  color: var(--white);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--dark-2); }
+::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 3px; }
+
+/* ── TICKER ── */
+.ticker-wrap {
+  background: var(--blue);
+  padding: 8px 0;
+  overflow: hidden;
+  position: relative;
+  z-index: 100;
+}
+.ticker-content {
+  display: inline-flex;
+  gap: 80px;
+  animation: ticker 30s linear infinite;
+  white-space: nowrap;
+}
+.ticker-content span {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+.ticker-content span::before { content: "⚡ "; }
+@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* ── NAVBAR ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  background: rgba(6,13,31,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0,87,255,0.2);
+  padding: 0 clamp(16px, 4vw, 60px);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 68px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.logo-icon {
+  width: 36px; height: 36px;
+  background: var(--blue);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.05em;
+}
+.logo-text span { color: var(--electric); }
+.logo-sub {
+  font-size: 10px;
+  color: var(--gray-400);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  line-height: 1;
+  margin-top: -2px;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin-left: 24px;
+}
+.nav-links a {
+  color: var(--gray-200);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: var(--transition);
+}
+.nav-links a:hover { color: var(--white); background: rgba(0,87,255,0.15); }
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+.search-wrap {
+  position: relative;
+}
+.search-input {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: var(--white);
+  padding: 8px 16px 8px 36px;
+  font-size: 13px;
+  font-family: var(--font-body);
+  width: 200px;
+  transition: var(--transition);
+  outline: none;
+}
+.search-input::placeholder { color: var(--gray-400); }
+.search-input:focus { border-color: var(--blue); background: rgba(0,87,255,0.08); width: 240px; }
+.search-icon {
+  position: absolute;
+  left: 10px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-400);
+  font-size: 14px;
+  pointer-events: none;
+}
+.search-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0; right: 0;
+  background: var(--dark-3);
+  border: 1px solid rgba(0,87,255,0.3);
+  border-radius: var(--radius);
+  padding: 8px;
+  display: none;
+  z-index: 200;
+  box-shadow: var(--shadow-lg);
+}
+.search-dropdown.show { display: block; }
+.search-result-item {
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--gray-200);
+  transition: var(--transition);
+  display: flex; align-items: center; gap: 8px;
+}
+.search-result-item:hover { background: rgba(0,87,255,0.15); color: var(--white); }
+
+.cart-btn {
+  position: relative;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: var(--white);
+  padding: 8px 14px;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 6px;
+  font-size: 14px;
+  transition: var(--transition);
+  font-family: var(--font-body);
+}
+.cart-btn:hover { background: rgba(0,87,255,0.2); border-color: var(--blue); }
+.cart-badge {
+  position: absolute;
+  top: -6px; right: -6px;
+  background: var(--accent-2);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+  transform: scale(0);
+  transition: var(--transition);
+}
+.cart-badge.show { opacity: 1; transform: scale(1); }
+
+.btn-cta {
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 9px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.btn-cta:hover { background: var(--blue-bright); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,87,255,0.4); }
+
+.hamburger {
+  display: none;
+  background: none; border: none;
+  color: var(--white);
+  font-size: 22px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* ── MOBILE NAV ── */
+.mobile-nav {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: 280px;
+  background: var(--dark-2);
+  border-right: 1px solid rgba(0,87,255,0.2);
+  z-index: 300;
+  padding: 24px;
+  transform: translateX(-100%);
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+  overflow-y: auto;
+}
+.mobile-nav.open { transform: translateX(0); }
+.mobile-nav-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 299;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+.mobile-nav-overlay.show { opacity: 1; pointer-events: all; }
+.mobile-nav-close {
+  background: none; border: none; color: var(--gray-400);
+  font-size: 22px; cursor: pointer; margin-bottom: 24px; display: block;
+}
+.mobile-nav ul { list-style: none; }
+.mobile-nav ul li a {
+  display: block; padding: 12px 0;
+  color: var(--gray-200); text-decoration: none;
+  font-size: 16px; font-weight: 500;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: var(--transition);
+}
+.mobile-nav ul li a:hover { color: var(--electric); padding-left: 8px; }
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex; align-items: center;
+  overflow: hidden;
+  padding: clamp(80px, 10vw, 120px) clamp(16px, 4vw, 60px) 60px;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(0,87,255,0.18) 0%, transparent 60%),
+              radial-gradient(ellipse 50% 40% at 20% 80%, rgba(0,212,255,0.08) 0%, transparent 50%),
+              linear-gradient(160deg, var(--dark) 0%, var(--dark-2) 50%, #030818 100%);
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image: 
+    linear-gradient(rgba(0,87,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,87,255,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%);
+}
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+.hero-orb-1 {
+  width: 500px; height: 500px;
+  background: rgba(0,87,255,0.15);
+  right: -100px; top: -100px;
+  animation: float 8s ease-in-out infinite;
+}
+.hero-orb-2 {
+  width: 300px; height: 300px;
+  background: rgba(0,212,255,0.1);
+  right: 200px; bottom: 0;
+  animation: float 6s ease-in-out infinite reverse;
+}
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
+
+.hero-inner {
+  position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.hero-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0,212,255,0.1);
+  border: 1px solid rgba(0,212,255,0.3);
+  border-radius: 100px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--electric);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.hero-label::before { content: "●"; font-size: 8px; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(42px, 6vw, 80px);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: 0.02em;
+  margin-bottom: 20px;
+}
+.hero h1 .line-accent { color: var(--electric); display: block; }
+.hero h1 .line-blue { 
+  background: linear-gradient(90deg, var(--blue-bright), var(--electric));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: 17px;
+  color: var(--gray-200);
+  margin-bottom: 36px;
+  max-width: 480px;
+  line-height: 1.7;
+}
+.hero-btns {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+.btn-primary {
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex; align-items: center; gap: 8px;
+  text-decoration: none;
+}
+.btn-primary:hover { background: var(--blue-bright); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,87,255,0.45); }
+.btn-secondary {
+  background: transparent;
+  color: var(--white);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: var(--radius);
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex; align-items: center; gap: 8px;
+}
+.btn-secondary:hover { border-color: var(--electric); color: var(--electric); transform: translateY(-2px); }
+
+.hero-stats {
+  display: flex;
+  gap: 32px;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1;
+}
+.stat-num span { color: var(--electric); }
+.stat-label {
+  font-size: 12px;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+}
+
+/* Hero visual */
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.hero-device {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+}
+.hero-card-main {
+  background: linear-gradient(135deg, var(--dark-3), var(--dark-2));
+  border: 1px solid rgba(0,87,255,0.3);
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 20px 80px rgba(0,87,255,0.25);
+  position: relative;
+  overflow: hidden;
+}
+.hero-card-main::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--blue), var(--electric), transparent);
+}
+.hc-label { font-size: 11px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+.hc-title { font-family: var(--font-display); font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+.hc-sub { font-size: 13px; color: var(--gray-400); margin-bottom: 20px; }
+.hc-visual {
+  width: 100%;
+  height: 160px;
+  background: linear-gradient(135deg, rgba(0,87,255,0.15), rgba(0,212,255,0.08));
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 72px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(0,87,255,0.2);
+  position: relative;
+  overflow: hidden;
+}
+.hc-visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,87,255,0.03) 10px, rgba(0,87,255,0.03) 11px);
+}
+.hc-price { font-family: var(--font-display); font-size: 30px; font-weight: 700; color: var(--electric); }
+.hc-price-old { font-size: 14px; color: var(--gray-400); text-decoration: line-through; margin-left: 8px; }
+.hc-btn {
+  display: block;
+  width: 100%;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  margin-top: 16px;
+  transition: var(--transition);
+  text-align: center;
+}
+.hc-btn:hover { background: var(--blue-bright); }
+
+.floating-badge {
+  position: absolute;
+  background: var(--success);
+  color: var(--dark);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 100px;
+  top: -14px;
+  right: 20px;
+}
+.floating-chip {
+  position: absolute;
+  background: var(--dark-3);
+  border: 1px solid rgba(0,212,255,0.3);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 12px;
+  display: flex; align-items: center; gap: 8px;
+  box-shadow: var(--shadow);
+  animation: float 4s ease-in-out infinite;
+}
+.floating-chip-1 { bottom: -20px; left: -30px; animation-delay: 0s; }
+.floating-chip-2 { top: 20px; right: -30px; animation-delay: 2s; }
+.chip-icon { font-size: 20px; }
+.chip-text { font-size: 11px; color: var(--gray-200); }
+.chip-val { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--electric); }
+
+/* ── BRANDS ── */
+.brands {
+  padding: 32px clamp(16px,4vw,60px);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.brands-inner {
+  max-width: 1400px; margin: 0 auto;
+  display: flex; align-items: center; gap: 40px;
+  flex-wrap: wrap;
+}
+.brands-label { font-size: 12px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap; }
+.brands-list {
+  display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+}
+.brand-item {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--gray-400);
+  letter-spacing: 0.08em;
+  transition: var(--transition);
+}
+.brand-item:hover { color: var(--white); }
+
+/* ── SECTION COMMONS ── */
+section { padding: clamp(60px,8vw,100px) clamp(16px,4vw,60px); }
+.section-inner { max-width: 1400px; margin: 0 auto; }
+.section-header { text-align: center; margin-bottom: 52px; }
+.section-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--electric);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: rgba(0,212,255,0.08);
+  border: 1px solid rgba(0,212,255,0.2);
+  padding: 4px 12px;
+  border-radius: 100px;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px,4vw,46px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+.section-title .accent { color: var(--electric); }
+.section-sub {
+  font-size: 16px;
+  color: var(--gray-400);
+  margin-top: 12px;
+  max-width: 520px;
+  margin-left: auto; margin-right: auto;
+}
+
+/* ── CATEGORIES ── */
+#categorias { background: var(--dark-2); }
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+.cat-card {
+  background: var(--dark-3);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-lg);
+  padding: 28px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  display: block;
+}
+.cat-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--electric));
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+.cat-card:hover { border-color: rgba(0,87,255,0.4); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,87,255,0.2); }
+.cat-card:hover::before { transform: scaleX(1); }
+.cat-icon { font-size: 36px; margin-bottom: 12px; display: block; }
+.cat-name {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 6px;
+  letter-spacing: 0.03em;
+}
+.cat-desc { font-size: 12px; color: var(--gray-400); line-height: 1.5; }
+.cat-count {
+  display: inline-block;
+  font-size: 10px;
+  color: var(--electric);
+  background: rgba(0,212,255,0.1);
+  border-radius: 100px;
+  padding: 2px 8px;
+  margin-top: 10px;
+}
+
+/* ── PRODUCTS ── */
+#productos { background: var(--dark); }
+.product-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 36px;
+}
+.filter-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 100px;
+  color: var(--gray-400);
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.filter-btn:hover, .filter-btn.active {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: var(--white);
+}
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+.product-card {
+  background: var(--dark-3);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.product-card:hover { border-color: rgba(0,87,255,0.35); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.product-card.hidden { display: none; }
+
+.product-badge {
+  position: absolute;
+  top: 12px; left: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 100px;
+  z-index: 2;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.badge-hot { background: var(--accent-2); color: #fff; }
+.badge-new { background: var(--success); color: var(--dark); }
+.badge-sale { background: var(--warning); color: var(--dark); }
+
+.product-img {
+  width: 100%;
+  height: 180px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 64px;
+  position: relative;
+  overflow: hidden;
+}
+.product-fav {
+  position: absolute;
+  top: 12px; right: 12px;
+  background: rgba(0,0,0,0.4);
+  border: none;
+  border-radius: 50%;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition: var(--transition);
+  color: var(--gray-400);
+}
+.product-fav:hover, .product-fav.active { color: #ff4d6d; background: rgba(255,77,109,0.15); }
+
+.product-info { padding: 18px; flex: 1; display: flex; flex-direction: column; }
+.product-brand { font-size: 10px; color: var(--blue-light); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 4px; }
+.product-name {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+.product-stars { font-size: 12px; color: var(--warning); margin-bottom: 12px; display: flex; align-items: center; gap: 4px; }
+.product-stars span { color: var(--gray-400); font-size: 11px; }
+.product-price { margin-top: auto; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.price-current {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--white);
+}
+.price-old { font-size: 13px; color: var(--gray-400); text-decoration: line-through; }
+.price-save { font-size: 11px; color: var(--success); font-weight: 600; }
+
+.product-actions { display: flex; gap: 8px; margin-top: 14px; }
+.btn-add {
+  flex: 1;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.btn-add:hover { background: var(--blue-bright); transform: translateY(-1px); }
+.btn-detail {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: var(--gray-200);
+  padding: 10px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--font-body);
+}
+.btn-detail:hover { border-color: var(--electric); color: var(--electric); }
+
+.load-more-wrap { text-align: center; margin-top: 40px; }
+
+/* ── CALCULATOR ── */
+#calculadora { background: var(--dark-2); }
+.calc-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.calc-form {
+  background: var(--dark-3);
+  border: 1px solid rgba(0,87,255,0.2);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+}
+.calc-result {
+  background: linear-gradient(135deg, rgba(0,87,255,0.12), rgba(0,212,255,0.06));
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+}
+.form-group { margin-bottom: 22px; }
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-200);
+  margin-bottom: 8px;
+}
+.form-input, .form-select {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: var(--white);
+  padding: 11px 14px;
+  font-size: 14px;
+  font-family: var(--font-body);
+  outline: none;
+  transition: var(--transition);
+}
+.form-input:focus, .form-select:focus { border-color: var(--blue); background: rgba(0,87,255,0.08); }
+.form-select option { background: var(--dark-3); }
+.form-input::placeholder { color: var(--gray-400); }
+
+.range-wrap { position: relative; }
+.range-input {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--blue) var(--pct,50%), rgba(255,255,255,0.1) var(--pct,50%));
+  outline: none;
+  cursor: pointer;
+}
+.range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 0 0 4px rgba(0,87,255,0.2);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.range-input::-webkit-slider-thumb:hover { box-shadow: 0 0 0 6px rgba(0,87,255,0.3); }
+.range-val {
+  text-align: right;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--electric);
+  margin-top: 6px;
+}
+
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+.result-card {
+  background: rgba(0,0,0,0.2);
+  border-radius: var(--radius);
+  padding: 16px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.result-icon { font-size: 24px; margin-bottom: 6px; }
+.result-val {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--electric);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.result-desc { font-size: 11px; color: var(--gray-400); }
+.calc-cta { margin-top: 24px; width: 100%; }
+
+/* ── WHY US ── */
+#nosotros { background: var(--dark); }
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+.why-card {
+  background: var(--dark-3);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  display: flex;
+  gap: 18px;
+  transition: var(--transition);
+}
+.why-card:hover { border-color: rgba(0,87,255,0.3); transform: translateY(-2px); }
+.why-icon {
+  width: 52px; height: 52px;
+  background: rgba(0,87,255,0.12);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+  border: 1px solid rgba(0,87,255,0.2);
+}
+.why-text h3 {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: 0.02em;
+}
+.why-text p { font-size: 13px; color: var(--gray-400); line-height: 1.6; }
+
+/* ── TESTIMONIALS ── */
+#testimonios { background: var(--dark-2); overflow: hidden; }
+.testimonials-carousel { position: relative; }
+.testimonials-track {
+  display: flex;
+  gap: 20px;
+  transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.testimonial-card {
+  background: var(--dark-3);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  min-width: 340px;
+  flex-shrink: 0;
+}
+.test-top { display: flex; gap: 14px; align-items: center; margin-bottom: 16px; }
+.test-avatar {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue), var(--electric));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.test-name { font-weight: 600; font-size: 15px; }
+.test-city { font-size: 12px; color: var(--gray-400); }
+.test-stars { color: var(--warning); font-size: 13px; margin-bottom: 12px; }
+.test-text { font-size: 14px; color: var(--gray-200); line-height: 1.7; font-style: italic; }
+.test-tag {
+  display: inline-block;
+  font-size: 10px;
+  color: var(--blue-light);
+  background: rgba(0,87,255,0.1);
+  border-radius: 100px;
+  padding: 2px 8px;
+  margin-top: 12px;
+}
+.carousel-controls { display: flex; gap: 10px; justify-content: center; margin-top: 28px; }
+.carousel-btn {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50%;
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: var(--white);
+  font-size: 16px;
+  transition: var(--transition);
+}
+.carousel-btn:hover { background: var(--blue); border-color: var(--blue); }
+
+/* ── CONTACT ── */
+#contacto { background: var(--dark); }
+.contact-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 48px;
+  align-items: start;
+}
+.contact-info h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  letter-spacing: 0.02em;
+}
+.contact-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.contact-item-icon {
+  width: 40px; height: 40px;
+  background: rgba(0,87,255,0.12);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.contact-item-text strong { display: block; font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.contact-item-text span { font-size: 13px; color: var(--gray-400); }
+.social-row { display: flex; gap: 10px; margin-top: 24px; }
+.social-btn {
+  width: 40px; height: 40px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  text-decoration: none;
+  transition: var(--transition);
+  cursor: pointer;
+}
+.social-btn:hover { background: rgba(0,87,255,0.2); border-color: var(--blue); }
+
+.contact-form {
+  background: var(--dark-3);
+  border: 1px solid rgba(0,87,255,0.15);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group .form-error { font-size: 11px; color: #ff6b6b; margin-top: 4px; display: none; }
+.form-group.error .form-input, .form-group.error .form-select { border-color: #ff6b6b; }
+.form-group.error .form-error { display: block; }
+
+textarea.form-input {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.6;
+}
+
+/* ── CART DRAWER ── */
+.cart-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 400;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+.cart-overlay.show { opacity: 1; pointer-events: all; }
+
+.cart-drawer {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: min(420px, 100vw);
+  background: var(--dark-2);
+  border-left: 1px solid rgba(0,87,255,0.2);
+  z-index: 401;
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.cart-drawer.open { transform: translateX(0); }
+
+.cart-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.cart-header h3 { font-family: var(--font-display); font-size: 20px; font-weight: 700; letter-spacing: 0.03em; }
+.cart-close {
+  background: none; border: none; color: var(--gray-400);
+  font-size: 22px; cursor: pointer; transition: var(--transition);
+}
+.cart-close:hover { color: var(--white); }
+
+.cart-items { flex: 1; overflow-y: auto; padding: 20px 24px; }
+.cart-empty {
+  text-align: center;
+  padding: 60px 0;
+  color: var(--gray-400);
+}
+.cart-empty-icon { font-size: 48px; margin-bottom: 12px; }
+.cart-item {
+  display: flex; gap: 14px; padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+.cart-item-img {
+  width: 60px; height: 60px;
+  background: var(--dark-3);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+.cart-item-info { flex: 1; }
+.cart-item-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; line-height: 1.3; }
+.cart-item-brand { font-size: 11px; color: var(--blue-light); margin-bottom: 8px; }
+.cart-item-qty {
+  display: flex; align-items: center; gap: 8px;
+}
+.qty-btn {
+  width: 24px; height: 24px;
+  background: rgba(255,255,255,0.08);
+  border: none; border-radius: 6px;
+  color: var(--white); font-size: 14px;
+  cursor: pointer; transition: var(--transition);
+  display: flex; align-items: center; justify-content: center;
+}
+.qty-btn:hover { background: var(--blue); }
+.qty-val { font-size: 14px; font-weight: 600; min-width: 20px; text-align: center; }
+.cart-item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.cart-item-price {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--electric);
+}
+.cart-item-remove {
+  background: none; border: none; color: var(--gray-400);
+  font-size: 14px; cursor: pointer; transition: var(--transition);
+}
+.cart-item-remove:hover { color: #ff6b6b; }
+
+.cart-footer { padding: 20px 24px; border-top: 1px solid rgba(255,255,255,0.06); }
+.coupon-row { display: flex; gap: 8px; margin-bottom: 16px; }
+.coupon-input {
+  flex: 1;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: var(--white);
+  padding: 9px 12px;
+  font-size: 13px;
+  font-family: var(--font-body);
+  outline: none;
+  transition: var(--transition);
+}
+.coupon-input:focus { border-color: var(--blue); }
+.coupon-input::placeholder { color: var(--gray-400); }
+.coupon-btn {
+  background: rgba(0,87,255,0.15);
+  border: 1px solid rgba(0,87,255,0.3);
+  border-radius: 10px;
+  color: var(--blue-light);
+  padding: 9px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: var(--transition);
+}
+.coupon-btn:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+.coupon-msg { font-size: 12px; margin-bottom: 12px; min-height: 16px; }
+.coupon-msg.ok { color: var(--success); }
+.coupon-msg.err { color: #ff6b6b; }
+
+.cart-totals { margin-bottom: 16px; }
+.cart-total-row {
+  display: flex; justify-content: space-between;
+  font-size: 13px; color: var(--gray-400);
+  margin-bottom: 8px;
+}
+.cart-total-row.main {
+  font-size: 18px; font-family: var(--font-display);
+  font-weight: 700; color: var(--white);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 12px; margin-top: 4px;
+}
+.cart-total-row.main span:last-child { color: var(--electric); }
+.cart-total-row .discount { color: var(--success); }
+.checkout-btn {
+  width: 100%;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: var(--transition);
+}
+.checkout-btn:hover { background: var(--blue-bright); box-shadow: 0 4px 20px rgba(0,87,255,0.5); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--dark-2);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding: 60px clamp(16px,4vw,60px) 24px;
+}
+.footer-inner { max-width: 1400px; margin: 0 auto; }
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 48px;
+}
+.footer-brand p { font-size: 13px; color: var(--gray-400); line-height: 1.7; margin: 14px 0 20px; max-width: 280px; }
+.newsletter-row { display: flex; gap: 8px; }
+.newsletter-input {
+  flex: 1;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: var(--white);
+  padding: 9px 12px;
+  font-size: 13px;
+  font-family: var(--font-body);
+  outline: none;
+}
+.newsletter-input::placeholder { color: var(--gray-400); }
+.newsletter-btn {
+  background: var(--blue);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  padding: 9px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: var(--transition);
+}
+.newsletter-btn:hover { background: var(--blue-bright); }
+.footer-col h4 {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 8px; }
+.footer-col ul li a {
+  font-size: 13px;
+  color: var(--gray-400);
+  text-decoration: none;
+  transition: var(--transition);
+}
+.footer-col ul li a:hover { color: var(--electric); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-bottom p { font-size: 12px; color: var(--gray-400); }
+.payment-icons { display: flex; gap: 8px; }
+.payment-icon {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 11px;
+  color: var(--gray-400);
+}
+
+/* ── FLOATING BTNS ── */
+.float-whatsapp {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  z-index: 500;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+}
+.wa-btn {
+  width: 56px; height: 56px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+  text-decoration: none;
+  transition: var(--transition);
+  animation: waPulse 3s infinite;
+}
+.wa-btn:hover { transform: scale(1.1); box-shadow: 0 8px 30px rgba(37,211,102,0.6); }
+@keyframes waPulse {
+  0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+  50% { box-shadow: 0 4px 40px rgba(37,211,102,0.7), 0 0 0 8px rgba(37,211,102,0.1); }
+}
+.wa-tooltip {
+  background: var(--dark-3);
+  border: 1px solid rgba(37,211,102,0.3);
+  border-radius: var(--radius);
+  padding: 8px 14px;
+  font-size: 12px;
+  color: var(--white);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: var(--transition);
+  pointer-events: none;
+}
+.float-whatsapp:hover .wa-tooltip { opacity: 1; transform: translateX(0); }
+
+.scroll-top {
+  position: fixed;
+  bottom: 96px; right: 28px;
+  width: 40px; height: 40px;
+  background: rgba(0,87,255,0.8);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: var(--transition);
+  z-index: 499;
+}
+.scroll-top.show { opacity: 1; pointer-events: all; }
+.scroll-top:hover { background: var(--blue); transform: translateY(-2px); }
+
+/* ── TOAST ── */
+.toast-container {
+  position: fixed;
+  top: 90px; right: 20px;
+  z-index: 600;
+  display: flex; flex-direction: column; gap: 10px;
+  pointer-events: none;
+}
+.toast {
+  background: var(--dark-3);
+  border: 1px solid rgba(0,229,160,0.3);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--white);
+  display: flex; align-items: center; gap: 10px;
+  box-shadow: var(--shadow);
+  animation: toastIn 0.3s ease forwards;
+  pointer-events: all;
+  max-width: 300px;
+}
+.toast.remove { animation: toastOut 0.3s ease forwards; }
+@keyframes toastIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes toastOut { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(20px); } }
+.toast-icon { font-size: 18px; }
+
+/* ── MODAL ── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 700;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+  padding: 20px;
+}
+.modal-overlay.show { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--dark-2);
+  border: 1px solid rgba(0,87,255,0.2);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  max-width: 500px;
+  width: 100%;
+  transform: scale(0.9);
+  transition: transform 0.3s;
+}
+.modal-overlay.show .modal { transform: scale(1); }
+.modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.modal-title { font-family: var(--font-display); font-size: 22px; font-weight: 700; }
+.modal-close { background: none; border: none; color: var(--gray-400); font-size: 22px; cursor: pointer; }
+
+/* ── SCROLL ANIMATIONS ── */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  .calc-wrap { grid-template-columns: 1fr; }
+  .contact-wrap { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .search-wrap { display: none; }
+  .hamburger { display: block; }
+  .hero-stats { gap: 20px; flex-wrap: wrap; }
+  .categories-grid { grid-template-columns: repeat(2, 1fr); }
+  .products-grid { grid-template-columns: repeat(2, 1fr); }
+  .why-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .floating-chip { display: none; }
+  .hero-btns { flex-direction: column; }
+  .hero-btns .btn-primary, .hero-btns .btn-secondary { justify-content: center; }
+}
+@media (max-width: 480px) {
+  .products-grid { grid-template-columns: 1fr; }
+  .categories-grid { grid-template-columns: repeat(2, 1fr); }
+  .result-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-content" id="tickerContent">
+    <span>Envío gratis en compras mayores a $3,000 MXN</span>
+    <span>Instalación profesional disponible en Tijuana y alrededores</span>
+    <span>Asesoría técnica gratuita: +52 661 128 2417</span>
+    <span>Garantía extendida en todos nuestros productos</span>
+    <span>Financiamiento disponible — pregunta por nuestros planes</span>
+    <span>Distribuidores autorizados de las mejores marcas</span>
+    <span>Envío a todo México con rastreo en tiempo real</span>
+    <span>Envío gratis en compras mayores a $3,000 MXN</span>
+    <span>Instalación profesional disponible en Tijuana y alrededores</span>
+    <span>Asesoría técnica gratuita: +52 661 128 2417</span>
+    <span>Garantía extendida en todos nuestros productos</span>
+    <span>Financiamiento disponible — pregunta por nuestros planes</span>
+    <span>Distribuidores autorizados de las mejores marcas</span>
+    <span>Envío a todo México con rastreo en tiempo real</span>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <div class="logo-icon">⚡</div>
+      <div>
+        <div class="logo-text">Volt<span>TJ</span></div>
+        <div class="logo-sub">Tijuana, BC</div>
+      </div>
+    </a>
+   <ul class="nav-links">
+  <li><a href="#inicio">Inicio</a></li>
+  <li><a href="#productos">Productos</a></li>
+  <li><a href="#calculadora">Calculadora Solar</a></li>
+  <li><a href="#nosotros">Nosotros</a></li>
+  <li><a href="#contacto">Contacto</a></li>
+</ul>
+    <div class="nav-right">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" placeholder="Buscar productos..." id="searchInput" autocomplete="off">
+        <div class="search-dropdown" id="searchDropdown"></div>
+      </div>
+      <button class="cart-btn" id="cartBtn">
+        🛒 <span id="cartText">Carrito</span>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </button>
+      <button class="btn-cta" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">
+        Cotizar Proyecto
+      </button>
+      <button class="hamburger" id="hamburgerBtn">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav-overlay" id="mobileOverlay" onclick="closeMobileNav()"></div>
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" onclick="closeMobileNav()">✕</button>
+  <div style="margin-bottom:24px;">
+    <div class="logo-text" style="font-family:var(--font-display);font-size:24px;font-weight:700;">Volt<span style="color:var(--electric);">TJ</span></div>
+  </div>
+  <ul>
+  <li><a href="#inicio" onclick="closeMobileNav()">🏠 Inicio</a></li>
+  <li><a href="#productos" onclick="closeMobileNav()">🛍️ Productos</a></li>
+  <li><a href="#calculadora" onclick="closeMobileNav()">☀️ Calculadora Solar</a></li>
+  <li><a href="#nosotros" onclick="closeMobileNav()">ℹ️ Nosotros</a></li>
+  <li><a href="#contacto" onclick="closeMobileNav()">📞 Contacto</a></li>
+</ul>
+  <div style="margin-top:24px;">
+    <a href="https://wa.me/526611282417" style="display:flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:12px 16px;border-radius:12px;text-decoration:none;font-weight:600;font-size:14px;">
+      <span style="font-size:20px;">📱</span> WhatsApp: 661 128 2417
+    </a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-label">Tijuana, BC · Distribución Nacional</div>
+      <h1>
+        Tecnología <span class="line-accent">Inteligente</span>
+        <span class="line-blue">Para Tu Mundo</span>
+      </h1>
+      <p class="hero-sub">
+        Paneles solares, microinversores, cámaras de seguridad y electrónicos de última generación. 
+        Precios de frontera, calidad garantizada, instalación en Tijuana y envío a todo México.
+      </p>
+      <div class="hero-btns">
+        <a href="#productos" class="btn-primary">🛍️ Ver Catálogo Completo</a>
+        <button class="btn-secondary" onclick="document.getElementById('calculadora').scrollIntoView({behavior:'smooth'})">
+          ☀️ Calcular Ahorro Solar
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num"><span id="cnt1">0</span>+</div>
+          <div class="stat-label">Proyectos</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num"><span id="cnt2">0</span>+</div>
+          <div class="stat-label">Clientes</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num"><span id="cnt3">0</span>k</div>
+          <div class="stat-label">kWh Generados</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num"><span id="cnt4">0</span></div>
+          <div class="stat-label">Años de Exp.</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-device">
+        <div class="hero-card-main">
+          <div class="floating-badge">✓ Más vendido</div>
+          <div class="hc-label">Producto Destacado</div>
+          <div class="hc-title">Kit Solar 3kW</div>
+          <div class="hc-sub">6 Paneles + Microinversores + Estructura</div>
+          <div class="hc-visual">☀️</div>
+          <div>
+            <span class="hc-price">$45,900 MXN</span>
+            <span class="hc-price-old">$54,000</span>
+          </div>
+          <button class="hc-btn" onclick="addToCart('Kit Solar Residencial 3kW',45900,'🌞','Solar')">⚡ Agregar al Carrito</button>
+        </div>
+        <div class="floating-chip floating-chip-1">
+          <span class="chip-icon">💰</span>
+          <div>
+            <div class="chip-text">Ahorro mensual est.</div>
+            <div class="chip-val">$1,800 MXN</div>
+          </div>
+        </div>
+        <div class="floating-chip floating-chip-2">
+          <span class="chip-icon">🌱</span>
+          <div>
+            <div class="chip-text">CO₂ evitado/año</div>
+            <div class="chip-val">2.4 Tons</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRANDS -->
+<div class="brands">
+  <div class="brands-inner">
+    <span class="brands-label">Marcas que manejamos</span>
+    <div class="brands-list">
+      <span class="brand-item">ENPHASE</span>
+      <span class="brand-item">SOLAREDGE</span>
+      <span class="brand-item">HIKVISION</span>
+      <span class="brand-item">DAHUA</span>
+      <span class="brand-item">LG SOLAR</span>
+      <span class="brand-item">FRONIUS</span>
+      <span class="brand-item">CANADIAN SOLAR</span>
+      <span class="brand-item">APSYSTEMS</span>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section id="productos">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">Tienda</div>
+      <h2 class="section-title">Productos <span class="accent">Destacados</span></h2>
+      <p class="section-sub">Los más vendidos, mejor calificados y con mejor relación precio-valor del mercado.</p>
+    </div>
+    
+    <!-- NUEVA CAJA DE BÚSQUEDA AQUÍ -->
+    <div class="search-section" style="margin-bottom: 30px; text-align: center;">
+      <div style="max-width: 600px; margin: 0 auto; position: relative;">
+        <input type="text" id="searchInputProducts" placeholder="🔍 Buscar microinversores, cámaras, baterías..." 
+               style="width: 100%; padding: 15px 20px; border-radius: 50px; border: 2px solid rgba(0,87,255,0.3); 
+                      background: var(--dark-3); color: var(--white); font-size: 16px;">
+        <button onclick="performSearch()" 
+                style="position: absolute; right: 5px; top: 5px; background: var(--blue); color: white; 
+                       border: none; border-radius: 50px; padding: 10px 25px; font-weight: 600; cursor: pointer;">
+          Buscar
+        </button>
+      </div>
+      <div style="margin-top: 10px; font-size: 13px; color: var(--gray-400);">
+        Búsquedas populares: 
+        <a href="javascript:void(0);" onclick="performSearch('microinversores'); return false;" style="color: var(--electric); text-decoration: underline; cursor: pointer;">Microinversores</a> • 
+        <a href="javascript:void(0);" onclick="performSearch('cámaras'); return false;" style="color: var(--electric); text-decoration: underline; cursor: pointer;">Cámaras</a> • 
+        <a href="javascript:void(0);" onclick="performSearch('paneles solares'); return false;" style="color: var(--electric); text-decoration: underline; cursor: pointer;">Paneles Solares</a> • 
+        <a href="javascript:void(0);" onclick="performSearch('baterías'); return false;" style="color: var(--electric); text-decoration: underline; cursor: pointer;">Baterías</a>
+      </div>
+    </div>
+    
+    <div class="product-filters" id="productFilters"></div>
+    <div class="products-grid" id="productsGrid"></div>
+    <div class="load-more-wrap">
+      <button class="btn-secondary" id="loadMoreBtn" onclick="loadMore()">Cargar más productos ↓</button>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section id="calculadora">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">Herramienta Gratuita</div>
+      <h2 class="section-title">Calculadora de <span class="accent">Ahorro Solar</span></h2>
+      <p class="section-sub">Descubre cuánto puedes ahorrar en tu recibo de luz con energía solar.</p>
+    </div>
+    <div class="calc-wrap reveal">
+      <div class="calc-form">
+        <div class="form-group">
+          <label class="form-label">💰 Recibo de luz mensual promedio</label>
+          <div class="range-wrap">
+            <input type="range" class="range-input" id="recibo" min="500" max="20000" step="100" value="3000" oninput="updateCalc()">
+            <div class="range-val" id="reciboVal">$3,000 MXN / mes</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">🏠 Tipo de instalación</label>
+          <select class="form-select" id="tipoInstalacion" onchange="updateCalc()">
+            <option value="residencial">Residencial (Casa)</option>
+            <option value="comercial">Comercial (Negocio / Oficina)</option>
+            <option value="industrial">Industrial</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">📍 Estado</label>
+          <select class="form-select" id="estadoCalc" onchange="updateCalc()">
+            <option value="bc">Baja California</option>
+            <option value="sonora">Sonora</option>
+            <option value="jalisco">Jalisco</option>
+            <option value="cdmx">Ciudad de México</option>
+            <option value="nl">Nuevo León</option>
+            <option value="otro">Otro estado</option>
+          </select>
+        </div>
+        <button class="btn-primary calc-cta" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">
+          📋 Quiero una cotización exacta
+        </button>
+      </div>
+      <div class="calc-result">
+        <h3 style="font-family:var(--font-display);font-size:20px;font-weight:700;margin-bottom:8px;">📊 Estimación de tu Sistema</h3>
+        <p style="font-size:13px;color:var(--gray-400);margin-bottom:4px;">Basado en radiación solar de Baja California</p>
+        <div class="result-grid">
+          <div class="result-card">
+            <div class="result-icon">☀️</div>
+            <div class="result-val" id="rPaneles">6</div>
+            <div class="result-desc">Paneles 550W estimados</div>
+          </div>
+          <div class="result-card">
+            <div class="result-icon">💰</div>
+            <div class="result-val" id="rAhorro">$2,400</div>
+            <div class="result-desc">Ahorro mensual en MXN</div>
+          </div>
+          <div class="result-card">
+            <div class="result-icon">📅</div>
+            <div class="result-val" id="rRetorno">4.2</div>
+            <div class="result-desc">Años para recuperar inversión</div>
+          </div>
+          <div class="result-card">
+            <div class="result-icon">🌱</div>
+            <div class="result-val" id="rCo2">2.4t</div>
+            <div class="result-desc">CO₂ evitado al año</div>
+          </div>
+        </div>
+        <div style="margin-top:20px;padding:14px;background:rgba(0,87,255,0.1);border-radius:var(--radius);border:1px solid rgba(0,87,255,0.2);">
+          <div style="font-size:12px;color:var(--gray-400);margin-bottom:4px;">Inversión estimada del sistema</div>
+          <div id="rInversion" style="font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--electric);">$45,000 MXN</div>
+          <div style="font-size:11px;color:var(--gray-400);margin-top:4px;">*Precio referencial, incluye instalación. Cotización exacta gratis.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="nosotros">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">¿Por qué VoltTJ?</div>
+      <h2 class="section-title">Tu Aliado en <span class="accent">Tecnología</span></h2>
+      <p class="section-sub">Más de 8 años en Tijuana, BC. Conocemos el mercado, las marcas y tus necesidades.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-icon">🏆</div>
+        <div class="why-text">
+          <h3>Garantía Extendida</h3>
+          <p>25 años en paneles solares, 10 años en microinversores. Respaldamos cada producto que vendemos.</p>
+        </div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">🔧</div>
+        <div class="why-text">
+          <h3>Instalación Certificada</h3>
+          <p>Técnicos certificados en Tijuana y área metropolitana. Instalamos lo que vendemos.</p>
+        </div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">🚚</div>
+        <div class="why-text">
+          <h3>Envío Nacional</h3>
+          <p>Enviamos a todo México con rastreo en tiempo real. Gratis en compras mayores a $3,000 MXN.</p>
+        </div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">💳</div>
+        <div class="why-text">
+          <h3>Financiamiento</h3>
+          <p>Planes de pago a 3, 6 y 12 meses. Pregunta por MSI en tarjetas participantes.</p>
+        </div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">🎯</div>
+        <div class="why-text">
+          <h3>Asesoría Técnica Gratuita</h3>
+          <p>Nuestros ingenieros te ayudan a elegir el sistema ideal para tu consumo y presupuesto.</p>
+        </div>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-icon">🌐</div>
+        <div class="why-text">
+          <h3>Precios de Frontera</h3>
+          <p>Por nuestra ubicación en Tijuana, accedemos a precios competitivos tanto en MXN como USD.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonios">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">Clientes</div>
+      <h2 class="section-title">Lo que dicen nuestros <span class="accent">Clientes</span></h2>
+    </div>
+    <div class="testimonials-carousel reveal">
+      <div style="overflow:hidden;">
+        <div class="testimonials-track" id="testimonialsTrack">
+          <div class="testimonial-card">
+            <div class="test-top">
+              <div class="test-avatar">RM</div>
+              <div>
+                <div class="test-name">Roberto Martínez</div>
+                <div class="test-city">Tijuana, BC</div>
+              </div>
+            </div>
+            <div class="test-stars">★★★★★</div>
+            <p class="test-text">"Instalé 8 paneles solares con microinversores Enphase. Mi recibo bajó de $4,200 a menos de $200. El equipo de VoltTJ fue muy profesional y puntual."</p>
+            <span class="test-tag">Sistema Solar Residencial 4kW</span>
+          </div>
+          <div class="testimonial-card">
+            <div class="test-top">
+              <div class="test-avatar" style="background:linear-gradient(135deg,#00b4d8,#0077b6);">AG</div>
+              <div>
+                <div class="test-name">Ana González</div>
+                <div class="test-city">Ensenada, BC</div>
+              </div>
+            </div>
+            <div class="test-stars">★★★★★</div>
+            <p class="test-text">"Compré 4 cámaras Hikvision para mi negocio. Excelente calidad de imagen, instalación perfecta y el soporte post-venta es increíble. 100% recomendado."</p>
+            <span class="test-tag">Sistema CCTV Comercial</span>
+          </div>
+          <div class="testimonial-card">
+            <div class="test-top">
+              <div class="test-avatar" style="background:linear-gradient(135deg,#f77f00,#d62828);">JL</div>
+              <div>
+                <div class="test-name">Jorge López</div>
+                <div class="test-city">Mexicali, BC</div>
+              </div>
+            </div>
+            <div class="test-stars">★★★★★</div>
+            <p class="test-text">"Tengo un negocio de refrigeración. Los paneles solares que instalé con VoltTJ me están ahorrando más de $8,000 al mes en electricidad. Inversión recuperada en 3 años."</p>
+            <span class="test-tag">Sistema Solar Comercial 10kW</span>
+          </div>
+          <div class="testimonial-card">
+            <div class="test-top">
+              <div class="test-avatar" style="background:linear-gradient(135deg,#7b2d8b,#4a0e8f);">SC</div>
+              <div>
+                <div class="test-name">Sandra Castro</div>
+                <div class="test-city">Tijuana, BC</div>
+              </div>
+            </div>
+            <div class="test-stars">★★★★☆</div>
+            <p class="test-text">"Me asesoraron muy bien para elegir el sistema de cámaras para mi casa. El envío fue rápido y la instalación excelente. Muy buena comunicación por WhatsApp."</p>
+            <span class="test-tag">CCTV Residencial 6 cámaras</span>
+          </div>
+          <div class="testimonial-card">
+            <div class="test-top">
+              <div class="test-avatar" style="background:linear-gradient(135deg,#2d6a4f,#1b4332);">MR</div>
+              <div>
+                <div class="test-name">Miguel Reyes</div>
+                <div class="test-city">Rosarito, BC</div>
+              </div>
+            </div>
+            <div class="test-stars">★★★★★</div>
+            <p class="test-text">"Instalé una batería LiFePO4 con mi sistema solar existente. Ahora tengo autonomía total incluso en los apagones. El equipo de VoltTJ me asesoró perfecto."</p>
+            <span class="test-tag">Batería de Almacenamiento 10kWh</span>
+          </div>
+          <div class="testimonial-card">
+            <div class="test-top">
+              <div class="test-avatar" style="background:linear-gradient(135deg,#e63946,#c1121f);">LV</div>
+              <div>
+                <div class="test-name">Laura Vega</div>
+                <div class="test-city">Tecate, BC</div>
+              </div>
+            </div>
+            <div class="test-stars">★★★★★</div>
+            <p class="test-text">"Excelente servicio y los mejores precios que encontré en toda la región. Me enviaron todo perfectamente empacado y llegó en tiempo. Los volveré a contactar sin duda."</p>
+            <span class="test-tag">Panel Solar + Microinversor</span>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" onclick="moveCarousel(-1)">←</button>
+        <button class="carousel-btn" onclick="moveCarousel(1)">→</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contacto">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-tag">Contacto</div>
+      <h2 class="section-title">Cotiza tu <span class="accent">Proyecto</span></h2>
+      <p class="section-sub">Respondemos en menos de 2 horas en horario laboral. ¡Asesoría técnica gratuita!</p>
+    </div>
+    <div class="contact-wrap reveal">
+      <div class="contact-info">
+        <h3>Estamos en Tijuana,<br>listos para ayudarte</h3>
+        <div class="contact-item">
+          <div class="contact-item-icon">📱</div>
+          <div class="contact-item-text">
+            <strong>WhatsApp / Teléfono</strong>
+            <span>+52 661 128 2417</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📧</div>
+          <div class="contact-item-text">
+            <strong>Correo Electrónico</strong>
+            <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7b1814150f1a180f143b0d14170f0f1155181416">[email&#160;protected]</a></span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div class="contact-item-text">
+            <strong>Ubicación</strong>
+            <span>Tijuana, Baja California, México</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">🕐</div>
+          <div class="contact-item-text">
+            <strong>Horario de Atención</strong>
+            <span>Lun–Vie 9:00–18:00 · Sáb 10:00–14:00</span>
+          </div>
+        </div>
+        <div class="social-row">
+          <a class="social-btn" href="https://wa.me/526611282417" target="_blank" title="WhatsApp">📱</a>
+          <a class="social-btn" href="#" title="Facebook">📘</a>
+          <a class="social-btn" href="#" title="Instagram">📸</a>
+          <a class="social-btn" href="#" title="YouTube">▶️</a>
+        </div>
+      </div>
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nombre completo *</label>
+            <input type="text" class="form-input" id="fNombre" placeholder="Tu nombre">
+            <div class="form-error">Por favor ingresa tu nombre</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Teléfono *</label>
+            <input type="tel" class="form-input" id="fTel" placeholder="+52 664 XXX XXXX">
+            <div class="form-error">Ingresa un teléfono válido</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Correo electrónico *</label>
+          <input type="email" class="form-input" id="fEmail" placeholder="tu@correo.com">
+          <div class="form-error">Ingresa un correo válido</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tipo de proyecto</label>
+          <select class="form-select" id="fTipo">
+            <option value="">Selecciona una opción</option>
+            <option>Sistema Solar Residencial</option>
+            <option>Sistema Solar Comercial</option>
+            <option>Sistema Solar Industrial</option>
+            <option>Cámaras de Seguridad</option>
+            <option>DVR / NVR / Grabadores</option>
+            <option>Baterías y Almacenamiento</option>
+            <option>Electrónica General</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Consumo mensual aproximado (kWh o monto en MXN)</label>
+          <input type="text" class="form-input" id="fConsumo" placeholder="Ej: $3,500 MXN o 300 kWh">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mensaje / Notas adicionales</label>
+          <textarea class="form-input" id="fMensaje" placeholder="Cuéntanos más sobre tu proyecto..."></textarea>
+        </div>
+        <button class="btn-primary" style="width:100%;justify-content:center;" onclick="submitForm()">
+          🚀 Enviar Solicitud de Cotización
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo" style="display:inline-flex;margin-bottom:4px;">
+          <div class="logo-icon" style="width:32px;height:32px;font-size:16px;">⚡</div>
+          <div>
+            <div class="logo-text" style="font-size:22px;">Volt<span>TJ</span></div>
+          </div>
+        </a>
+        <p>Tu tienda de tecnología en Tijuana, BC. Paneles solares, microinversores, cámaras y electrónicos. Envío a todo México.</p>
+        <div class="newsletter-row">
+          <input type="email" class="newsletter-input" placeholder="Tu correo electrónico" id="newsletterEmail">
+          <button class="newsletter-btn" onclick="subscribeNewsletter()">Suscribir</button>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Proyectos</a></li>
+          <li><a href="#">Trabaja con nosotros</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Productos</h4>
+        <ul>
+          <li><a href="#productos">Paneles Solares</a></li>
+          <li><a href="#productos">Microinversores</a></li>
+          <li><a href="#productos">Cámaras IP</a></li>
+          <li><a href="#productos">Baterías</a></li>
+          <li><a href="#productos">Inversores</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Política de Privacidad</a></li>
+          <li><a href="#">Términos de Servicio</a></li>
+          <li><a href="#">Política de Devoluciones</a></li>
+          <li><a href="#">Garantías</a></li>
+          <li><a href="#">Aviso de Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="footerYear"></span> VoltTJ · Tijuana, Baja California, México · Todos los derechos reservados</p>
+      <div class="payment-icons">
+        <span class="payment-icon">VISA</span>
+        <span class="payment-icon">MC</span>
+        <span class="payment-icon">AMEX</span>
+        <span class="payment-icon">OXXO</span>
+        <span class="payment-icon">SPEI</span>
+        <span class="payment-icon">PayPal</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<div class="float-whatsapp">
+  <span class="wa-tooltip">💬 Chatea con nosotros</span>
+  <a href="https://wa.me/526611282417?text=Hola%20VoltTJ%2C%20me%20interesa%20recibir%20información%20sobre%20sus%20productos." target="_blank" class="wa-btn">📱</a>
+</div>
+
+<!-- SCROLL TOP -->
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>🛒 Tu Carrito</h3>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty" id="cartEmpty">
+      <div class="cart-empty-icon">🛒</div>
+      <p style="font-size:15px;font-weight:600;margin-bottom:6px;">Tu carrito está vacío</p>
+      <p style="font-size:13px;color:var(--gray-400);">Agrega productos para comenzar</p>
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div class="coupon-row">
+      <input type="text" class="coupon-input" id="couponInput" placeholder="Código de descuento">
+      <button class="coupon-btn" onclick="applyCoupon()">Aplicar</button>
+    </div>
+    <div class="coupon-msg" id="couponMsg"></div>
+    <div class="cart-totals">
+      <div class="cart-total-row">
+        <span>Subtotal</span>
+        <span id="cartSubtotal">$0</span>
+      </div>
+      <div class="cart-total-row" id="discountRow" style="display:none;">
+        <span>Descuento</span>
+        <span class="discount" id="discountAmt">-$0</span>
+      </div>
+      <div class="cart-total-row">
+        <span>Envío</span>
+        <span id="cartShipping">Calcular al cotizar</span>
+      </div>
+      <div class="cart-total-row main">
+        <span>Total</span>
+        <span id="cartTotal">$0 MXN</span>
+      </div>
+    </div>
+    <button class="checkout-btn" onclick="checkout()">
+      📱 Finalizar por WhatsApp
+    </button>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- PRODUCT DETAIL MODAL -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modalTitle">Producto</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── CONFIG ──
+const COUPONS = { 'VOLT10': 10, 'SOLAR15': 15, 'TJ20': 20, 'BAJA5': 5 };
+const WA_NUM = '526611282417';
+// ⚠️ When deploying to Vercel, change this URL to your Vercel URL
+const API_URL = 'https://voltmx-backend.vercel.app';
+
+let cart = [];
+let cartDiscount = 0;
+let currentCatId = '22';
+let currentPage = 1;
+let totalProducts = 0;
+let carouselPos = 0;
+let favs = new Set();
+let syscomProducts = [];
+let isLoading = false;
+
+// ── VARIABLES PARA BÚSQUEDA ──
+let searchResults = [];
+let searchQuery = '';
+let searchPage = 1;
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('footerYear').textContent = new Date().getFullYear();
+  loadCategories();
+  loadProducts(currentCatId, 1);
+  setupSearch();
+  setupScrollReveal();
+  animateCounters();
+  updateCalc();
+  startCarousel();
+  updateRangeStyle();
+});
+
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scrollTopBtn');
+  btn.classList.toggle('show', window.scrollY > 300);
+});
+
+// ── FUNCIÓN PARA MOSTRAR NOTIFICACIONES (TOAST) ──
+function showToast(msg, type = 'success') {
+  const container = document.getElementById('toastContainer');
+  if (!container) return;
+  
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  
+  let icon = '✅';
+  if (type === 'error') icon = '❌';
+  if (type === 'warning') icon = '⚠️';
+  
+  toast.innerHTML = `<span class="toast-icon">${icon}</span> ${msg}`;
+  container.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.classList.add('remove');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+// ── FUNCIÓN PRINCIPAL DE BÚSQUEDA ──
+function performSearch(query) {
+  if (query) {
+    searchQuery = query;
+    const searchInput = document.getElementById('searchInputProducts');
+    if (searchInput) searchInput.value = query;
+  } else {
+    const searchInput = document.getElementById('searchInputProducts');
+    if (!searchInput) return;
+    searchQuery = searchInput.value.trim();
+  }
+  
+  if (!searchQuery || searchQuery.length < 2) {
+    showToast('⚠️ Ingresa al menos 2 caracteres para buscar', 'warning');
+    return;
+  }
+  
+  const grid = document.getElementById('productsGrid');
+  if (!grid) return;
+  
+  grid.innerHTML = `
+    <div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--gray-400);">
+      <div style="font-size:48px;margin-bottom:20px;animation:pulse 1.5s infinite;">🔍</div>
+      <p style="font-size:18px;margin-bottom:10px;">Buscando "${searchQuery}"...</p>
+      <p style="font-size:14px;">Por favor espera</p>
+    </div>
+  `;
+  
+  const loadMoreBtn = document.getElementById('loadMoreBtn');
+  if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+  
+  searchResults = [];
+  searchPage = 1;
+  
+  fetchSearchResults(searchQuery, 1);
+}
+
+// ── FUNCIÓN PARA OBTENER RESULTADOS DE BÚSQUEDA ──
+async function fetchSearchResults(query, page) {
+  try {
+    const url = `${API_URL}/api/buscar?q=${encodeURIComponent(query)}&pagina=${page}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    
+    if (!data.ok) throw new Error(data.error);
+    
+    const productos = data.productos || [];
+    
+    if (page === 1) {
+      searchResults = productos;
+    } else {
+      searchResults = [...searchResults, ...productos];
+    }
+    
+    displaySearchResults(productos, page === 1, data.total || productos.length);
+    
+  } catch (err) {
+    console.error('Error en búsqueda:', err);
+    const grid = document.getElementById('productsGrid');
+    if (grid) {
+      grid.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--gray-400);">
+          <div style="font-size:48px;margin-bottom:20px;">❌</div>
+          <p style="font-size:18px;margin-bottom:10px;">Error en la búsqueda</p>
+          <p style="font-size:14px;">Intenta de nuevo más tarde</p>
+          <button class="btn-primary" style="margin-top:20px;" onclick="loadProducts('22', 1)">Ver todos los productos</button>
+        </div>
+      `;
+    }
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+  }
+}
+
+// ── FUNCIÓN PARA MOSTRAR RESULTADOS ──
+function displaySearchResults(productos, isNewSearch, total) {
+  const grid = document.getElementById('productsGrid');
+  if (!grid) return;
+  
+  if (isNewSearch) {
+    grid.innerHTML = '';
+  }
+  
+  if (productos.length === 0 && isNewSearch) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--gray-400);">
+        <div style="font-size:64px;margin-bottom:20px;">🔍</div>
+        <p style="font-size:20px;margin-bottom:10px;">No se encontraron productos para "${searchQuery}"</p>
+        <p style="font-size:14px;margin-bottom:30px;">Intenta con otras palabras</p>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <button class="btn-secondary" onclick="performSearch('microinversores')">Buscar Microinversores</button>
+          <button class="btn-secondary" onclick="performSearch('cámaras')">Buscar Cámaras</button>
+          <button class="btn-primary" onclick="loadProducts('22', 1)">Ver todos</button>
+        </div>
+      </div>
+    `;
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+    return;
+  }
+  
+  const sectionTitle = document.querySelector('#productos .section-title');
+  if (sectionTitle && isNewSearch) {
+    sectionTitle.innerHTML = `Resultados para <span class="accent">"${searchQuery}"</span>`;
+    const sectionSub = document.querySelector('#productos .section-sub');
+    if (sectionSub) {
+      sectionSub.innerHTML = `Se encontraron ${total} productos`;
+    }
+  }
+  
+  productos.forEach((p) => {
+    const precio = p.precio_publico || 0;
+    const stock = parseInt(p.total_existencia) || 0;
+    const enStock = stock > 0;
+    const imgUrl = p.img_portada || '';
+    const nombre = (p.titulo || '').replace(/'/g, '&#39;');
+    const marca = (p.marca || '').replace(/'/g, '&#39;');
+    const modelo = p.modelo || '';
+
+    const imgHtml = imgUrl
+      ? `<img src="${imgUrl}" style="width:100%;height:100%;object-fit:contain;padding:8px;" onerror="this.parentElement.innerHTML='<span style=font-size:48px>📦</span>'">`
+      : `<span style="font-size:48px">📦</span>`;
+
+    grid.innerHTML += `
+    <div class="product-card reveal" data-id="${p.producto_id}">
+      ${!enStock ? `<span class="product-badge" style="background:#444;color:#aaa;right:12px;">Sin stock</span>` : ''}
+      <div class="product-img" style="background:#0d1a30;">
+        ${imgHtml}
+        <button class="product-fav ${favs && favs.has(p.producto_id) ? 'active' : ''}" onclick="toggleFav('${p.producto_id}', this)">♥</button>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">${marca}</div>
+        <div class="product-name">${nombre.substring(0, 70)}${nombre.length > 70 ? '...' : ''}</div>
+        ${modelo ? `<div style="font-size:11px;color:var(--gray-400);">Modelo: ${modelo}</div>` : ''}
+        <div style="font-size:11px;color:${enStock ? 'var(--success)' : '#ff6b6b'};margin:8px 0;">
+          ${enStock ? `✅ ${stock} en stock` : '❌ Sin existencia'}
+        </div>
+        <div class="product-price">
+          <span class="price-current">$${precio.toLocaleString('es-MX', {minimumFractionDigits:2})} MXN</span>
+        </div>
+        <div class="product-actions">
+          <button class="btn-add" ${!enStock ? 'disabled style="opacity:0.5"' : ''} 
+            onclick="addToCart('${nombre.substring(0,50).replace(/'/g, "\\'")}',${precio},'${imgUrl}','${marca}')">
+            🛒 ${enStock ? 'Agregar' : 'Sin stock'}
+          </button>
+          <button class="btn-detail" onclick="showSyscomDetail('${p.producto_id}')">🔍</button>
+        </div>
+      </div>
+    </div>`;
+  });
+  
+  const loadMoreBtn = document.getElementById('loadMoreBtn');
+  if (loadMoreBtn) {
+    if (productos.length >= 20 && searchResults.length < total) {
+      loadMoreBtn.style.display = 'inline-flex';
+      loadMoreBtn.onclick = () => {
+        searchPage++;
+        fetchSearchResults(searchQuery, searchPage);
+      };
+      loadMoreBtn.innerHTML = `Cargar más (${searchResults.length} de ${total}) ↓`;
+    } else {
+      loadMoreBtn.style.display = 'none';
+    }
+  }
+  
+  setTimeout(() => {
+    document.querySelectorAll('.reveal').forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight + 100) el.classList.add('visible');
+    });
+  }, 50);
+}
+
+// ── FUNCIÓN PARA SELECCIONAR RESULTADO ──
+function selectSearchResult(productId) {
+  const input = document.getElementById('searchInput');
+  if (input) input.value = '';
+  const dropdown = document.getElementById('searchDropdown');
+  if (dropdown) dropdown.classList.remove('show');
+  showSyscomDetail(productId);
+}
+
+// ── LOAD CATEGORIES FROM API ──
+async function loadCategories() {
+  try {
+    const res = await fetch(`${API_URL}/api/categorias`);
+    const data = await res.json();
+    
+    if (data.ok && data.categorias) {
+      buildFilterButtons(data.categorias);
+    } else {
+      buildFilterButtons([
+        { id: '22', nombre: 'Videovigilancia', icon: '📹' },
+        { id: '26', nombre: 'Redes e IT', icon: '🌐' },
+        { id: '30', nombre: 'Energía', icon: '⚡' },
+        { id: '32', nombre: 'Automatización', icon: '🔒' },
+        { id: '37', nombre: 'Control de Acceso', icon: '🚪' }
+      ]);
+    }
+  } catch (err) {
+    console.error('Error loading categories:', err);
+    buildFilterButtons([
+      { id: '22', nombre: 'Videovigilancia', icon: '📹' },
+      { id: '26', nombre: 'Redes e IT', icon: '🌐' },
+      { id: '30', nombre: 'Energía', icon: '⚡' }
+    ]);
+  }
+}
+
+// ── BUILD FILTER BUTTONS FROM CATEGORIES ──
+function buildFilterButtons(categorias) {
+  const wrap = document.getElementById('productFilters');
+  wrap.innerHTML = `<button class="filter-btn active" onclick="filterProducts('22')">🔥 Todos</button>`;
+  
+  categorias.forEach(c => {
+    wrap.innerHTML += `<button class="filter-btn" onclick="filterProducts('${c.id}')">${c.icon || '📦'} ${c.nombre}</button>`;
+  });
+}
+
+// ── LOAD PRODUCTS FROM BACKEND ──
+async function loadProducts(catId, page = 1) {
+  if (isLoading) return;
+  isLoading = true;
+  const grid = document.getElementById('productsGrid');
+  const loadBtn = document.getElementById('loadMoreBtn');
+
+  if (page === 1) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--gray-400);">
+        <div style="font-size:36px;margin-bottom:12px;animation:pulse 1.5s infinite;">⚡</div>
+        <p>Cargando productos desde Syscom...</p>
+      </div>`;
+  }
+
+  try {
+    const url = `${API_URL}/api/productos?categoria=${catId}&pagina=${page}`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if (!data.ok) throw new Error(data.error);
+
+    syscomProducts = page === 1 ? data.productos : [...syscomProducts, ...data.productos];
+    totalProducts = data.total || 0;
+
+    renderSyscomProducts(syscomProducts);
+
+    loadBtn.style.display = syscomProducts.length < totalProducts ? 'inline-flex' : 'none';
+    currentPage = page;
+
+  } catch (err) {
+    console.error('Error cargando productos:', err);
+    grid.innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--gray-400);">
+        <div style="font-size:36px;margin-bottom:12px;">⚠️</div>
+        <p style="margin-bottom:8px;">Error conectando con el servidor</p>
+        <p style="font-size:12px;">Asegúrate que el backend esté corriendo en localhost:3000</p>
+        <button class="btn-secondary" style="margin-top:16px;" onclick="loadProducts('${catId}',1)">Reintentar</button>
+      </div>`;
+    document.getElementById('loadMoreBtn').style.display = 'none';
+  } finally {
+    isLoading = false;
+  }
+}
+
+// ── RENDER SYSCOM PRODUCTS ──
+function renderSyscomProducts(productos) {
+  const grid = document.getElementById('productsGrid');
+  grid.innerHTML = '';
+
+  if (!productos.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--gray-400);">Sin productos en esta categoría</div>`;
+    return;
+  }
+
+  productos.forEach((p, idx) => {
+    const precio = p.precio_publico || 0;
+    const stock = parseInt(p.total_existencia) || 0;
+    const enStock = stock > 0;
+    const badge = idx < 3 ? 'hot' : null;
+    const garantia = p.garantia || '';
+    const modelo = p.modelo || '';
+    const imgUrl = p.img_portada || '';
+    const nombre = (p.titulo || '').replace(/'/g, '&#39;');
+    const marca = (p.marca || '').replace(/'/g, '&#39;');
+
+    const imgHtml = imgUrl
+      ? `<img src="${imgUrl}" alt="${nombre}" style="width:100%;height:100%;object-fit:contain;padding:8px;" onerror="this.parentElement.innerHTML='<span style=font-size:48px>📦</span>'">`
+      : `<span style="font-size:48px">📦</span>`;
+
+    grid.innerHTML += `
+    <div class="product-card reveal" data-id="${p.producto_id}">
+      ${badge ? `<span class="product-badge badge-hot">🔥 Destacado</span>` : ''}
+      ${!enStock ? `<span class="product-badge" style="background:#444;color:#aaa;left:auto;right:12px;">Sin stock</span>` : ''}
+      <div class="product-img" style="background:#0d1a30;position:relative;">
+        ${imgHtml}
+        <button class="product-fav ${favs.has(p.producto_id)?'active':''}" onclick="toggleFav('${p.producto_id}', this)">♥</button>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">${marca}</div>
+        <div class="product-name">${nombre.substring(0, 70)}${nombre.length > 70 ? '...' : ''}</div>
+        <div style="font-size:11px;color:var(--gray-400);margin-bottom:6px;">
+          ${modelo ? `Modelo: ${modelo}` : ''}
+          ${garantia ? ` · ${garantia}` : ''}
+        </div>
+        <div style="font-size:11px;color:${enStock ? 'var(--success)' : '#ff6b6b'};margin-bottom:8px;font-weight:600;">
+          ${enStock ? `✅ ${stock} en stock` : '❌ Sin existencia'}
+        </div>
+        <div class="product-price">
+          <span class="price-current">$${precio.toLocaleString('es-MX', {minimumFractionDigits:2})} MXN</span>
+        </div>
+        <div class="product-actions">
+          <button class="btn-add" ${!enStock ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''} 
+            onclick="addToCart('${nombre.substring(0,50).replace(/'/g, "\\'")}',${precio},'${imgUrl}','${marca}')">
+            🛒 ${enStock ? 'Agregar' : 'Sin stock'}
+          </button>
+          <button class="btn-detail" onclick="showSyscomDetail('${p.producto_id}')">🔍</button>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  setTimeout(() => {
+    document.querySelectorAll('.reveal').forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight + 100) el.classList.add('visible');
+    });
+  }, 50);
+}
+
+// ── FILTER PRODUCTS ──
+function filterProducts(catId) {
+  currentCatId = catId;
+  currentPage = 1;
+  syscomProducts = [];
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick')?.includes(`'${catId}'`));
+  });
+  loadProducts(catId, 1);
+  document.getElementById('productos').scrollIntoView({ behavior: 'smooth' });
+}
+
+function loadMore() {
+  loadProducts(currentCatId, currentPage + 1);
+}
+
+// ── SHOW PRODUCT DETAIL ──
+async function showSyscomDetail(sku) {
+  document.getElementById('modalTitle').textContent = 'Cargando...';
+  document.getElementById('modalBody').innerHTML = `<div style="text-align:center;padding:40px;color:var(--gray-400);">⚡ Cargando detalle...</div>`;
+  document.getElementById('productModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+
+  try {
+    const res = await fetch(`${API_URL}/api/productos/${sku}`);
+    const data = await res.json();
+    const p = data.producto;
+
+    const nombre = p.titulo || '';
+    const precio = p.precio_publico || 0;
+    const stock = parseInt(p.total_existencia) || 0;
+    const imgUrl = p.img_portada || '';
+    const marca = p.marca || '';
+    const modelo = p.modelo || '';
+    const garantia = p.garantia || 'N/A';
+
+    document.getElementById('modalTitle').textContent = 'Detalle del Producto';
+    document.getElementById('modalBody').innerHTML = `
+      <div style="text-align:center;margin-bottom:16px;background:#0d1a30;border-radius:12px;padding:16px;">
+        ${imgUrl ? `<img src="${imgUrl}" style="max-height:200px;max-width:100%;object-fit:contain;" onerror="this.style.display='none'">` : '<span style="font-size:64px">📦</span>'}
+      </div>
+      <div style="font-size:14px;color:var(--blue-light);font-weight:600;margin-bottom:8px;">${marca} ${modelo ? '· ' + modelo : ''}</div>
+      <h3 style="font-size:18px;font-weight:600;margin-bottom:16px;line-height:1.4;">${nombre}</h3>
+      
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;">
+        <div style="background:rgba(0,87,255,0.08);border-radius:10px;padding:15px;text-align:center;">
+          <div style="font-size:12px;color:var(--gray-400);margin-bottom:5px;">Stock disponible</div>
+          <div style="font-size:24px;font-weight:700;color:${stock>0?'var(--success)':'#ff6b6b'}">${stock > 0 ? stock + ' pzas' : 'Sin stock'}</div>
+        </div>
+        <div style="background:rgba(0,87,255,0.08);border-radius:10px;padding:15px;text-align:center;">
+          <div style="font-size:12px;color:var(--gray-400);margin-bottom:5px;">Garantía</div>
+          <div style="font-size:24px;font-weight:700;color:var(--electric)">${garantia}</div>
+        </div>
+      </div>
+      
+      <div style="background:rgba(0,212,255,0.1);border-radius:12px;padding:20px;margin-bottom:20px;text-align:center;">
+        <div style="font-size:14px;color:var(--gray-400);margin-bottom:5px;">Precio</div>
+        <div style="font-family:var(--font-display);font-size:36px;font-weight:700;color:var(--electric);">
+          $${precio.toLocaleString('es-MX', {minimumFractionDigits:2})} MXN
+        </div>
+      </div>
+      
+      <button class="btn-primary" style="width:100%;justify-content:center;padding:16px;font-size:16px;" 
+        ${!stock ? 'disabled style="opacity:0.5"' : ''}
+        onclick="addToCart('${nombre.substring(0,50).replace(/'/g,"\\'")}',${precio},'${imgUrl}','${marca}');closeModal();">
+        🛒 ${stock > 0 ? 'Agregar al Carrito' : 'Sin stock'}
+      </button>
+    `;
+  } catch(err) {
+    document.getElementById('modalBody').innerHTML = `<p style="color:#ff6b6b;text-align:center;">Error cargando detalle</p>`;
+  }
+}
+
+// ── CLOSE MODAL FUNCTION ──
+function closeModal() { 
+  document.getElementById('productModal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('productModal').addEventListener('click', function(e) { 
+  if (e.target === this) closeModal(); 
+});
+
+// ── SEARCH IMPROVED ──
+function setupSearch() {
+  const input = document.getElementById('searchInput');
+  const dropdown = document.getElementById('searchDropdown');
+  let searchTimer;
+  let lastQuery = '';
+
+  if (!input) return;
+
+  dropdown.style.maxHeight = '400px';
+  dropdown.style.overflowY = 'auto';
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim();
+    clearTimeout(searchTimer);
+    
+    if (!q || q.length < 2) { 
+      dropdown.classList.remove('show'); 
+      return; 
+    }
+
+    dropdown.innerHTML = `<div class="search-result-item" style="cursor:default;color:var(--gray-400);">🔍 Buscando "${q}"...</div>`;
+    dropdown.classList.add('show');
+
+    searchTimer = setTimeout(async () => {
+      if (q === lastQuery) return;
+      lastQuery = q;
+
+      try {
+        const res = await fetch(`${API_URL}/api/buscar?q=${encodeURIComponent(q)}`);
+        const data = await res.json();
+        
+        if (!data.ok) throw new Error(data.error);
+        
+        const results = data.productos || [];
+
+        if (results.length > 0) {
+          dropdown.innerHTML = results.map(p => {
+            const img = p.img_portada || '';
+            const titulo = (p.titulo || '').substring(0, 60);
+            const precio = p.precio_publico || 0;
+            const id = p.producto_id;
+            const marca = p.marca || '';
+            const stock = parseInt(p.total_existencia) || 0;
+            
+            return `
+              <div class="search-result-item" onclick="selectSearchResult('${id}')">
+                <div style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#0d1a30;border-radius:6px;">
+                  ${img ? `<img src="${img}" style="max-width:35px;max-height:35px;object-fit:contain;">` : '📦'}
+                </div>
+                <div style="flex:1;min-width:0;">
+                  <div style="font-size:13px;font-weight:500;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${titulo}</div>
+                  <div style="display:flex;gap:8px;font-size:11px;color:var(--gray-400);margin-top:2px;">
+                    <span>${marca || 'Genérico'}</span>
+                    <span style="color:${stock>0?'var(--success)':'#ff6b6b'}">${stock>0?'✓ Stock':'✗ Agotado'}</span>
+                  </div>
+                </div>
+                <div style="color:var(--electric);font-size:13px;font-weight:600;white-space:nowrap;">$${precio.toLocaleString('es-MX', {minimumFractionDigits:2})}</div>
+              </div>`;
+          }).join('');
+          
+          dropdown.innerHTML += `<div style="padding:8px 12px;font-size:11px;color:var(--gray-400);text-align:center;border-top:1px solid rgba(255,255,255,0.05);">
+            ${results.length} productos encontrados
+          </div>`;
+          
+          dropdown.classList.add('show');
+        } else {
+          dropdown.innerHTML = `
+            <div class="search-result-item" style="cursor:default;color:var(--gray-400);flex-direction:column;padding:20px;">
+              <div style="font-size:24px;margin-bottom:8px;">🔍</div>
+              <div>No se encontraron productos para "${q}"</div>
+              <div style="font-size:11px;margin-top:8px;">Intenta con otras palabras</div>
+            </div>`;
+          dropdown.classList.add('show');
+        }
+      } catch(err) {
+        console.error('Search error:', err);
+        dropdown.innerHTML = `<div class="search-result-item" style="cursor:default;color:#ff6b6b;">Error al buscar</div>`;
+        dropdown.classList.add('show');
+      }
+    }, 300);
+  });
+
+  document.addEventListener('click', (e) => { 
+    if (!e.target.closest('.search-wrap')) {
+      dropdown.classList.remove('show');
+      lastQuery = '';
+    }
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      dropdown.classList.remove('show');
+      lastQuery = '';
+    }
+  });
+}
+
+// ── FUNCTIONS FOR TOGGLE FAV ──
+function toggleFav(id, btn) {
+  if (favs.has(id)) { 
+    favs.delete(id); 
+    btn.classList.remove('active'); 
+    showToast('💔 Eliminado de favoritos');
+  } else { 
+    favs.add(id); 
+    btn.classList.add('active'); 
+    showToast('❤️ Guardado en favoritos');
+  }
+}
+
+// ── CART FUNCTIONS ──
+function addToCart(name, price, imgUrl, cat) {
+  const ex = cart.find(i => i.name === name);
+  if (ex) ex.qty++;
+  else cart.push({ name, price, imgUrl, cat, qty: 1 });
+  updateCartUI();
+  openCart();
+  showToast(`✅ ${name.substring(0,30)}... agregado`);
+}
+
+function removeFromCart(idx) { cart.splice(idx, 1); updateCartUI(); }
+function changeQty(idx, delta) { cart[idx].qty = Math.max(1, cart[idx].qty + delta); updateCartUI(); }
+
+function updateCartUI() {
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const count = cart.reduce((s, i) => s + i.qty, 0);
+  const badge = document.getElementById('cartBadge');
+  badge.textContent = count;
+  badge.classList.toggle('show', count > 0);
+
+  const itemsEl = document.getElementById('cartItems');
+  const emptyEl = document.getElementById('cartEmpty');
+
+  if (cart.length === 0) {
+    emptyEl.style.display = 'block';
+    itemsEl.querySelectorAll('.cart-item').forEach(e => e.remove());
+  } else {
+    emptyEl.style.display = 'none';
+    itemsEl.querySelectorAll('.cart-item').forEach(e => e.remove());
+    cart.forEach((item, idx) => {
+      const el = document.createElement('div');
+      el.className = 'cart-item';
+      const imgHtml = item.imgUrl && item.imgUrl.startsWith('http')
+        ? `<img src="${item.imgUrl}" style="width:100%;height:100%;object-fit:contain;padding:4px;" onerror="this.style.display='none'">`
+        : `<span style="font-size:28px">📦</span>`;
+      el.innerHTML = `
+        <div class="cart-item-img">${imgHtml}</div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-brand">${item.cat}</div>
+          <div class="cart-item-qty">
+            <button class="qty-btn" onclick="changeQty(${idx},-1)">−</button>
+            <span class="qty-val">${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty(${idx},1)">+</button>
+          </div>
+        </div>
+        <div class="cart-item-right">
+          <span class="cart-item-price">$${(item.price*item.qty).toLocaleString('es-MX',{minimumFractionDigits:2})}</span>
+          <button class="cart-item-remove" onclick="removeFromCart(${idx})">🗑️</button>
+        </div>`;
+      itemsEl.appendChild(el);
+    });
+  }
+
+  const disc = total * cartDiscount / 100;
+  const finalTotal = total - disc;
+  document.getElementById('cartSubtotal').textContent = `$${total.toLocaleString('es-MX',{minimumFractionDigits:2})} MXN`;
+  document.getElementById('cartTotal').textContent = `$${Math.round(finalTotal).toLocaleString('es-MX',{minimumFractionDigits:2})} MXN`;
+  document.getElementById('cartShipping').textContent = total > 3000 ? '✅ Gratis' : 'A cotizar';
+  const discRow = document.getElementById('discountRow');
+  discRow.style.display = cartDiscount > 0 ? 'flex' : 'none';
+  document.getElementById('discountAmt').textContent = `-$${Math.round(disc).toLocaleString()} MXN (${cartDiscount}%)`;
+}
+
+function openCart() {
+  document.getElementById('cartDrawer').classList.add('open');
+  document.getElementById('cartOverlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeCart() {
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.getElementById('cartOverlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+document.getElementById('cartBtn').addEventListener('click', openCart);
+
+function applyCoupon() {
+  const code = document.getElementById('couponInput').value.toUpperCase().trim();
+  const msgEl = document.getElementById('couponMsg');
+  if (COUPONS[code]) {
+    cartDiscount = COUPONS[code];
+    msgEl.textContent = `✅ Cupón aplicado: ${cartDiscount}% de descuento`;
+    msgEl.className = 'coupon-msg ok';
+    updateCartUI();
+  } else {
+    msgEl.textContent = '❌ Código inválido o expirado';
+    msgEl.className = 'coupon-msg err';
+  }
+}
+
+function checkout() {
+  if (cart.length === 0) { showToast('⚠️ Tu carrito está vacío'); return; }
+  const total = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  const disc = total * cartDiscount / 100;
+  let msg = `🛒 *Pedido VoltTJ*\n\n`;
+  cart.forEach(i => { msg += `• ${i.name} x${i.qty} = $${(i.price*i.qty).toLocaleString('es-MX',{minimumFractionDigits:2})} MXN\n`; });
+  msg += `\n💰 *Total: $${Math.round(total-disc).toLocaleString('es-MX',{minimumFractionDigits:2})} MXN*`;
+  if (cartDiscount > 0) msg += ` (descuento ${cartDiscount}% aplicado)`;
+  msg += `\n\n¡Hola! Quiero finalizar este pedido. ¿Me pueden ayudar?`;
+  window.open(`https://wa.me/${WA_NUM}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// ── SCROLL REVEAL ──
+function setupScrollReveal() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 60); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+}
+
+// ── COUNTERS ──
+function animateCounters() {
+  const targets = [{ id:'cnt1', val:350 }, { id:'cnt2', val:620 }, { id:'cnt3', val:1200 }, { id:'cnt4', val:8 }];
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      targets.forEach(t => {
+        let start = 0; const step = Math.ceil(t.val/60);
+        const timer = setInterval(() => { start = Math.min(start+step, t.val); const el = document.getElementById(t.id); if(el) el.textContent=start; if(start>=t.val) clearInterval(timer); }, 25);
+      });
+      obs.disconnect();
+    }
+  });
+  const hero = document.querySelector('.hero-stats');
+  if (hero) obs.observe(hero);
+}
+
+// ── CAROUSEL ──
+function startCarousel() {
+  setInterval(() => {
+    const track = document.getElementById('testimonialsTrack');
+    if (!track) return;
+    const cards = track.querySelectorAll('.testimonial-card');
+    const visible = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
+    carouselPos = carouselPos >= (cards.length - visible) ? 0 : carouselPos + 1;
+    track.style.transform = `translateX(-${carouselPos * 360}px)`;
+  }, 4000);
+}
+
+function moveCarousel(dir) {
+  const track = document.getElementById('testimonialsTrack');
+  if (!track) return;
+  const cards = track.querySelectorAll('.testimonial-card');
+  const visible = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
+  carouselPos = Math.max(0, Math.min(cards.length - visible, carouselPos + dir));
+  track.style.transform = `translateX(-${carouselPos * 360}px)`;
+}
+
+// ── CALC ──
+function updateCalc() {
+  const recibo = parseFloat(document.getElementById('recibo')?.value) || 3000;
+  const tipo = document.getElementById('tipoInstalacion')?.value || 'residencial';
+  const factor = tipo === 'residencial' ? 0.9 : tipo === 'comercial' ? 0.85 : 0.8;
+  const kwh = recibo / 3.5;
+  const paneles = Math.ceil(kwh / (30 * 5 * 0.8));
+  const ahorro = recibo * factor;
+  const inversion = paneles * 8500;
+  const payback = (inversion / (ahorro * 12)).toFixed(1);
+  
+  document.getElementById('rPaneles').textContent = paneles;
+  document.getElementById('rAhorro').textContent = '$' + Math.round(ahorro).toLocaleString();
+  document.getElementById('rRetorno').textContent = payback;
+  document.getElementById('rInversion').textContent = '$' + inversion.toLocaleString() + ' MXN';
+  
+  updateRangeStyle();
+}
+
+function updateRangeStyle() {
+  const r = document.getElementById('recibo');
+  if (!r) return;
+  const pct = ((r.value - r.min) / (r.max - r.min)) * 100;
+  r.style.background = `linear-gradient(to right, var(--blue) ${pct}%, rgba(255,255,255,0.1) ${pct}%)`;
+  document.getElementById('reciboVal').textContent = '$' + parseInt(r.value).toLocaleString() + ' MXN / mes';
+}
+
+// ── NEWSLETTER ──
+function subscribeNewsletter() {
+  const v = document.getElementById('newsletterEmail')?.value;
+  if (!v || !v.includes('@')) { showToast('⚠️ Ingresa un email válido', 'warning'); return; }
+  showToast('✅ ¡Suscrito! Recibirás nuestras ofertas.');
+  document.getElementById('newsletterEmail').value = '';
+}
+
+// ── MOBILE NAV ──
+function closeMobileNav() {
+  document.getElementById('mobileNav').classList.remove('open');
+  document.getElementById('mobileOverlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('hamburgerBtn').addEventListener('click', () => {
+  document.getElementById('mobileNav').classList.add('open');
+  document.getElementById('mobileOverlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+});
+
+// ── FORM SUBMIT ──
+function submitForm() {
+  showT
